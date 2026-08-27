@@ -6,22 +6,22 @@ Lyliane Fat-Nelle Généviève Damado
 
 - **Taille du vocabulaire :** 15 mots différents (marqueurs `<s>` et `</s>` compris).
 - **Nombre total de tokens :** 45.
-- **Différence vocabulaire / tokens :** le vocabulaire compte chaque mot **une seule fois** (les mots distincts), alors que le nombre de tokens compte **toutes les occurrences**, répétitions comprises. Le mot « le » apparaît plusieurs fois dans les tokens, mais une seule fois dans le vocabulaire.
+- **Différence vocabulaire / tokens :** le vocabulaire compte chaque mot **une seule fois** (les mots distincts), alors que le nombre de tokens compte **toutes les occurrences**, répétitions comprises. Le mot " le " apparaît plusieurs fois dans les tokens, mais une seule fois dans le vocabulaire.
 
 ## Partie 2 - N-grammes
 
-- **Bigramme le plus fréquent :** `(<s>, le)`, qui apparaît 6 fois, car les six phrases commencent par « le ».
+- **Bigramme le plus fréquent :** `(<s>, le)`, qui apparaît 6 fois, car les six phrases commencent par " le ".
 - **Trigramme le plus fréquent :** `(<s>, le, chat)`, 3 fois.
 
 ## Partie 3 - Modèle bigramme
 
 1. **Pourquoi certaines probabilités sont-elles nulles ?** Parce que le bigramme correspondant n'apparaît jamais dans le corpus : son comptage est 0, donc la probabilité est 0.
-2. **Une probabilité élevée ?** Le deuxième mot suit très souvent le premier ; c'est un enchaînement fréquent dans le corpus (ex. après « du », toujours « poisson »).
+2. **Une probabilité élevée ?** Le deuxième mot suit très souvent le premier ; c'est un enchaînement fréquent dans le corpus (ex. après " du ", toujours " poisson ").
 3. **Une probabilité nulle ?** Cet enchaînement de deux mots n'a jamais été observé dans le corpus.
 
 ## Partie 4 - Prédiction
 
-**Différence entre P(chat | le) et P(le | chat).** P(chat | le) mesure la chance de voir « chat » **après** « le ». P(le | chat) mesure la chance de voir « le » **après** « chat ». L'ordre est différent, donc ce sont deux bigrammes différents, `(le, chat)` et `(chat, le)`. Dans le corpus « le chat » existe mais « chat le » non, d'où des probabilités différentes. En général P(A|B) ≠ P(B|A).
+**Différence entre P(chat | le) et P(le | chat).** P(chat | le) mesure la chance de voir " chat " **après** " le ". P(le | chat) mesure la chance de voir " le " **après** " chat ". L'ordre est différent, donc ce sont deux bigrammes différents, `(le, chat)` et `(chat, le)`. Dans le corpus " le chat " existe mais " chat le " non, d'où des probabilités différentes. En général P(A|B) != P(B|A).
 
 ## Partie 5 - Génération
 
@@ -33,15 +33,15 @@ Lyliane Fat-Nelle Généviève Damado
 
 ## Partie 7 - Comparaison de phrases
 
-**Comment les N-grammes tiennent-ils compte de l'ordre des mots ?** Ils ne comptent pas les mots isolément, mais les **paires ordonnées** de mots. `(le, chat)` et `(chat, le)` sont deux bigrammes distincts. Changer l'ordre change les bigrammes, donc la probabilité. C'est pourquoi « le chat mange du poisson » a une probabilité positive alors que « poisson le mange chat du » tombe à zéro.
+**Comment les N-grammes tiennent-ils compte de l'ordre des mots ?** Ils ne comptent pas les mots isolément, mais les **paires ordonnées** de mots. `(le, chat)` et `(chat, le)` sont deux bigrammes distincts. Changer l'ordre change les bigrammes, donc la probabilité. C'est pourquoi " le chat mange du poisson " a une probabilité positive alors que " poisson le mange chat du " tombe à zéro.
 
 ## Partie 8 - Correction contextuelle
 
-**Pourquoi les N-grammes détectent des erreurs qu'un dictionnaire ne peut pas voir ?** Un dictionnaire vérifie seulement si un mot **existe**. Or « cet » et « ans » existent tous les deux : l'erreur « Il a cet ans » n'est pas un mot inconnu, c'est un problème de **contexte**. Le N-gramme regarde le mot précédent : après « a », « sept » est bien plus probable que « cet ». Il détecte donc une erreur contextuelle invisible pour un simple dictionnaire.
+**Pourquoi les N-grammes détectent des erreurs qu'un dictionnaire ne peut pas voir ?** Un dictionnaire vérifie seulement si un mot **existe**. Or " cet " et " ans " existent tous les deux : l'erreur " Il a cet ans " n'est pas un mot inconnu, c'est un problème de **contexte**. Le N-gramme regarde le mot précédent : après " a ", " sept " est bien plus probable que " cet ". Il détecte donc une erreur contextuelle invisible pour un simple dictionnaire.
 
 ## Partie 9 - Comptes nuls
 
-Plusieurs bigrammes ont une fréquence nulle, par exemple `(chat, pain)`, `(chien, poisson)`, `(mange, chien)`. **Le problème :** comme la probabilité d'une phrase est un **produit** de probabilités, un seul bigramme à 0 rend toute la phrase égale à 0. Le modèle juge alors « impossible » une phrase qui est simplement absente du corpus.
+Plusieurs bigrammes ont une fréquence nulle, par exemple `(chat, pain)`, `(chien, poisson)`, `(mange, chien)`. **Le problème :** comme la probabilité d'une phrase est un **produit** de probabilités, un seul bigramme à 0 rend toute la phrase égale à 0. Le modèle juge alors " impossible " une phrase qui est simplement absente du corpus.
 
 ## Partie 10 - Lissage de Laplace
 
@@ -63,8 +63,8 @@ Plusieurs bigrammes ont une fréquence nulle, par exemple `(chat, pain)`, `(chie
 2. **Corpus vs vocabulaire ?** Le corpus est l'ensemble des textes d'apprentissage (toutes les phrases, avec répétitions). Le vocabulaire est l'ensemble des mots distincts qui y apparaissent.
 3. **Unigramme, bigramme, trigramme ?** Ce sont des suites de 1, 2 ou 3 mots consécutifs. Ils utilisent respectivement 0, 1 et 2 mots de contexte.
 4. **Pourquoi une probabilité conditionnelle ?** Parce que le modèle bigramme estime la probabilité d'un mot **sachant** le mot précédent : P(mot | mot précédent).
-5. **Que signifie P(chat | le) ?** La probabilité que le mot « chat » apparaisse juste après le mot « le ».
-6. **Pourquoi P(chat | le) ≠ P(le | chat) ?** Parce que l'ordre des mots compte : ce sont deux enchaînements différents, avec des comptages différents dans le corpus.
+5. **Que signifie P(chat | le) ?** La probabilité que le mot " chat " apparaisse juste après le mot " le ".
+6. **Pourquoi P(chat | le) != P(le | chat) ?** Parce que l'ordre des mots compte : ce sont deux enchaînements différents, avec des comptages différents dans le corpus.
 7. **Comment prédire le mot suivant ?** En cherchant, parmi tous les mots, celui qui a la plus forte probabilité après le contexte donné (argmax de P(mot | contexte)).
 8. **Comment générer une phrase ?** En partant de `<s>`, en prédisant le mot suivant le plus probable, en l'ajoutant, et en répétant jusqu'à `</s>`.
 9. **Comment comparer deux phrases ?** En calculant la probabilité de chacune (produit des probabilités de leurs bigrammes) et en comparant les deux valeurs.
