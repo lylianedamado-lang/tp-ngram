@@ -14,11 +14,11 @@ CORPUS = [
 
 def tokeniser(phrase):
     """Transforme une phrase en liste de tokens, avec <s> et </s>."""
-    phrase = phrase.lower()                 # 1. tout en minuscules
-    for signe in ".,;:!?":                  # 2. on enlève la ponctuation
+    phrase = phrase.lower()                 
+    for signe in ".,;:!?":                  
         phrase = phrase.replace(signe, " ")
-    mots = phrase.split()                   # 3. on découpe en mots
-    return ["<s>"] + mots + ["</s>"]        # 4. on ajoute les marqueurs
+    mots = phrase.split()                  
+    return ["<s>"] + mots + ["</s>"]       
 
 
 def construire_corpus_tokenise(corpus):
